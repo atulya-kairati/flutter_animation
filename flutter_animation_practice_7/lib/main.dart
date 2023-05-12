@@ -25,10 +25,12 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late AnimationController _sidesController;
   late Animation _sideAnimation;
+
+  late AnimationController _radiusController;
+  late Animation _radiusAnimation;
 
   @override
   void initState() {
@@ -44,8 +46,22 @@ class _HomePageState extends State<HomePage>
       end: 10,
     ).animate(_sidesController);
 
-    _sidesController.repeat(reverse: true);
+    _radiusController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    );
 
+    _radiusAnimation = Tween(
+      begin: 20.0,
+      end: 400.0,
+    )
+        .chain(
+          CurveTween(curve: Curves.bounceInOut),
+        )
+        .animate(_radiusController);
+
+    _sidesController.repeat(reverse: true);
+    _radiusController.repeat(reverse: true);
   }
 
   @override
@@ -53,13 +69,16 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
       body: Center(
         child: AnimatedBuilder(
-          animation: Listenable.merge([_sideAnimation]),
+          animation: Listenable.merge([
+            _sideAnimation,
+            _radiusAnimation,
+          ]),
           builder: (context, child) {
             return CustomPaint(
               painter: Polygon(sides: _sideAnimation.value),
               child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.width,
+                width: _radiusAnimation.value,
+                height: _radiusAnimation.value,
               ),
             );
           },
@@ -71,6 +90,7 @@ class _HomePageState extends State<HomePage>
   @override
   void dispose() {
     _sidesController.dispose();
+    _radiusController.dispose();
     super.dispose();
   }
 }
