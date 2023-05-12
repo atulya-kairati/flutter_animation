@@ -18,22 +18,60 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _sidesController;
+  late Animation _sideAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _sidesController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    );
+
+    _sideAnimation = IntTween(
+      begin: 3,
+      end: 10,
+    ).animate(_sidesController);
+
+    _sidesController.repeat(reverse: true);
+
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: CustomPaint(
-          painter: Polygon(sides: 9),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width,
-          ),
+        child: AnimatedBuilder(
+          animation: Listenable.merge([_sideAnimation]),
+          builder: (context, child) {
+            return CustomPaint(
+              painter: Polygon(sides: _sideAnimation.value),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width,
+              ),
+            );
+          },
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _sidesController.dispose();
+    super.dispose();
   }
 }
 
