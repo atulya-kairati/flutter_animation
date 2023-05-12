@@ -27,10 +27,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late AnimationController _sidesController;
-  late Animation _sideAnimation;
+  late Animation<int> _sideAnimation;
 
   late AnimationController _radiusController;
-  late Animation _radiusAnimation;
+  late Animation<double> _radiusAnimation;
+
+  late AnimationController _rotationController;
+  late Animation<double> _rotationAnimation;
 
   @override
   void initState() {
@@ -51,7 +54,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       duration: const Duration(seconds: 3),
     );
 
-    _radiusAnimation = Tween(
+    _radiusAnimation = Tween<double>(
       begin: 20.0,
       end: 400.0,
     )
@@ -60,8 +63,23 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         )
         .animate(_radiusController);
 
+    _rotationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    );
+
+    _rotationAnimation = Tween<double>(
+      begin: 0.0,
+      end: 2 * pi,
+    )
+        .chain(
+          CurveTween(curve: Curves.easeInOut),
+        )
+        .animate(_rotationController);
+
     _sidesController.repeat(reverse: true);
     _radiusController.repeat(reverse: true);
+    _rotationController.repeat(reverse: true);
   }
 
   @override
@@ -72,13 +90,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           animation: Listenable.merge([
             _sideAnimation,
             _radiusAnimation,
+            _rotationAnimation,
           ]),
           builder: (context, child) {
-            return CustomPaint(
-              painter: Polygon(sides: _sideAnimation.value),
-              child: SizedBox(
-                width: _radiusAnimation.value,
-                height: _radiusAnimation.value,
+            return Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()
+                ..rotateX(_rotationAnimation.value)
+                ..rotateY(_rotationAnimation.value)
+                ..rotateZ(_rotationAnimation.value),
+              child: CustomPaint(
+                painter: Polygon(sides: _sideAnimation.value),
+                child: SizedBox(
+                  width: _radiusAnimation.value,
+                  height: _radiusAnimation.value,
+                ),
               ),
             );
           },
@@ -91,6 +117,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void dispose() {
     _sidesController.dispose();
     _radiusController.dispose();
+    _rotationController.dispose();
     super.dispose();
   }
 }
