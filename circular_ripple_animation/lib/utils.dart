@@ -1,0 +1,1 @@
+final double waveGap = 20;
