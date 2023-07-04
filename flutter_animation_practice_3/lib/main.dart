@@ -76,8 +76,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   alignment: Alignment.center,
                   transform: Matrix4.identity()
                     ..rotateX(_animation.evaluate(_xController))
-                    ..rotateY(_animation.evaluate(_xController))
-                    ..rotateZ(_animation.evaluate(_xController)),
+                    ..rotateY(_animation.evaluate(_yController))
+                    ..rotateZ(_animation.evaluate(_zController)),
                   child: Stack(
                     children: [
                       // back

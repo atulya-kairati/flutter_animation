@@ -139,11 +139,13 @@ class Polygon extends CustomPainter {
 
     final center = Offset(size.width / 2, size.height / 2);
 
-    final exteriorAngle = (2 * pi) / sides;
+    final centralAngle = (2 * pi) / sides;
 
-    final angles = List.generate(sides, (index) => exteriorAngle * index);
+    final angles = List.generate(sides, (index) => centralAngle * index);
 
     final radius = size.width / 2;
+
+    // The equation of a circle in parametric form is given by x=a*cos(θ), y=a*sin(θ).
 
     path.moveTo(
       center.dx + radius * cos(0),

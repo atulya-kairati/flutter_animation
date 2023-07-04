@@ -4,7 +4,6 @@ import 'dart:math' show pi;
 import 'package:flutter_animation_practice_2/split_circle_widget.dart';
 import 'extensions.dart' show DelayedCall;
 
-
 class Home extends StatefulWidget {
   const Home({super.key});
 

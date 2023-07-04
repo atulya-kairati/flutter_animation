@@ -11,7 +11,7 @@ extension ToPath on CircleSide {
 
     switch (this) {
       case CircleSide.left:
-        // moved to top left which is starting of the arc
+        // moved to top right which is starting of the arc
         path.moveTo(size.width, 0);
         // set the other end of the of the arc
         arcEnd = Offset(size.width, size.height);
