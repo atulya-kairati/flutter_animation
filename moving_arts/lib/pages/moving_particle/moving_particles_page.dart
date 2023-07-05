@@ -29,7 +29,7 @@ class _MovingParticlesPageState extends State<MovingParticlesPage>
     particles = List.generate(100, (index) {
       return Particle(
         position: const Offset(-1, -1),
-        color: ColorGen.getRandomSolidColors(),
+        color: ColorGen.getRandomSolidColor(),
         radius: rnd.nextDouble() * maxRadius,
         speed: rnd.nextDouble() * maxSpeed, // 0 -> maxSpeed(0.2)
         angle: rnd.nextDouble() * maxAngle, // 0 -> maxAngle(2pi)
@@ -45,6 +45,9 @@ class _MovingParticlesPageState extends State<MovingParticlesPage>
       begin: 0,
       end: 300,
     ).animate(controller);
+
+    // animation will give 300 values in 10 secs
+    // which amounts to 30fps
 
     controller
       ..reset()

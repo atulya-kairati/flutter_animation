@@ -8,11 +8,9 @@ import 'package:moving_arts/utils/math_utils.dart';
 class Particle {
   Offset position;
   Color color;
-
+  double radius;
   double speed;
   double angle;
-
-  double radius;
 
   Particle({
     // position is in cartesian form
@@ -26,6 +24,16 @@ class Particle {
     required this.speed,
     required this.angle,
   });
+
+  Particle.withZeroVelocity({
+    // position is in cartesian form
+    required this.position,
+
+    // properties of the particle
+    required this.color,
+    required this.radius,
+  })  : angle = 0,
+        speed = 0;
 
   bool isOffScreen({required Size screenSize}) {
     /// Checks if the particle is out of screen or not
@@ -48,7 +56,8 @@ class Particle {
     position = newPosition;
   }
 
-  void move(){
+  void move() {
+    /// move the particle acc to velocity
     final velocity = MathUtils.polarToCartesian(speed, angle);
     position = position + velocity;
   }

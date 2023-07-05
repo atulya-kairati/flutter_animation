@@ -24,7 +24,8 @@ class MovingParticlesPainter extends CustomPainter {
     // painting particles on canvas
     for (var particle in particles) {
       final paint = Paint()
-        ..color = particle.color;
+        ..color = particle.color
+        ..blendMode = BlendMode.overlay;
       canvas.drawCircle(particle.position, particle.radius, paint);
     }
   }

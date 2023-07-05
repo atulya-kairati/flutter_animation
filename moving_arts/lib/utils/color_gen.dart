@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class ColorGen {
-  static Color getRandomSolidColors() {
+  static Color getRandomSolidColor() {
     final rand = Random();
 
     return Color.fromARGB(
