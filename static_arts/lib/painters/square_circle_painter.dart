@@ -19,11 +19,7 @@ class SquareCirclePainter extends CustomPainter {
 
     // create a square
     final square = Rect.fromCircle(center: Offset.zero, radius: squareSide / 2);
-    final eclipseRect = Rect.fromCenter(
-      center: Offset.zero,
-      width: square.width / 6,
-      height: square.height,
-    );
+
 
     final squarePaint = Paint()
       ..style = PaintingStyle.stroke
