@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moving_arts/pages/blooming_flower/blooming_flower_page.dart';
 import 'package:moving_arts/pages/moving_blob_field/moving_blob_page.dart';
 
 // import 'pages/moving_particle/moving_particles_page.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Moving Art',
       theme: ThemeData.dark(),
-      home: const MovingBlobPage(),
+      home: const BloomFlowerPage(),
     );
   }
 }
